@@ -1,0 +1,88 @@
+/* Reset some default browser styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Body styling */
+body {
+  background-color: #f0f4f8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  min-height: 100vh;
+}
+
+/* Title */
+h1 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Input and button container */
+input[type="text"] {
+  padding: 10px;
+  width: 250px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #0078d4;
+  color: white;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #005a9e;
+}
+
+/* Todo List */
+ul#todoList {
+  list-style: none;
+  margin-top: 20px;
+  width: 300px;
+  padding: 0;
+}
+
+ul#todoList li {
+  background-color: white;
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+ul#todoList li:hover {
+  background-color: #e0f0ff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 400px) {
+  input[type="text"] {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  button {
+    width: 100%;
+  }
+
+  ul#todoList {
+    width: 100%;
+  }
+}
