@@ -8,25 +8,42 @@ const databaseId = process.env.COSMOS_DB_DATABASE;
 const containerId = process.env.COSMOS_DB_CONTAINER;
 
 const client = new CosmosClient({ endpoint, key });
-const container = client.database(databaseId).container(containerId);
+const database = client.database(databaseId);
+const container = database.container(containerId);
 
-// GET all todos
+// Get all todos
 router.get("/", async (req, res) => {
-  const { resources } = await container.items.query("SELECT * from c").fetchAll();
-  res.json(resources);
+  try {
+    const { resources: items } = await container.items.query("SELECT * FROM c").fetchAll();
+    res.json(items);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch todos" });
+  }
 });
 
-// POST a new todo
+// Add a new todo
 router.post("/", async (req, res) => {
-  const newItem = { text: req.body.text };
-  const { resource } = await container.items.create(newItem);
-  res.json(resource);
+  try {
+    const todo = req.body;
+    const { resource } = await container.items.create(todo);
+    res.status(201).json(resource);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to create todo" });
+  }
 });
 
-// DELETE a todo by id
+// Delete a todo
 router.delete("/:id", async (req, res) => {
-  await container.item(req.params.id, req.params.id).delete();
-  res.json({ success: true });
+  try {
+    const id = req.params.id;
+    const { resource } = await container.item(id, id).delete();
+    res.json({ deleted: resource.id });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to delete todo" });
+  }
 });
 
 module.exports = router;
