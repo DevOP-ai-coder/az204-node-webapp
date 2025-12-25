@@ -1,20 +1,21 @@
 name: Azure Node.js Web App Deploy
 
+# Trigger the workflow on push to main branch
 on:
   push:
     branches:
-      - main  # Trigger on pushes to main branch
+      - main
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout your repository
-      - name: Checkout Repository
+      # Step 1: Checkout the repository
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Set up Node.js
+      # Step 2: Set up Node.js environment
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -24,10 +25,14 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Step 4: Deploy to Azure Web App
+      # Step 4: Build project (optional, only if you have build steps)
+      # - name: Build project
+      #   run: npm run build
+
+      # Step 5: Deploy to Azure Web App
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: az204-node-OPCoder    # <-- Your Azure Web App name
+          app-name: az204-node-OPCoder                   # Your Azure Web App name
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: .
